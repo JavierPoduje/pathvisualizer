@@ -1,0 +1,25 @@
+@use "sass:map";
+@import "../../styles/common";
+
+.main {
+  background-color: map-get($colors, mantle);
+  border-radius: 5px;
+  width: 90%;
+  padding: 0.5rem 1rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: calc(10px + 2vmin)
+}
+
+.appName {
+  font-size: inherit;
+  margin: 0;
+}
+
+.buttons {
+  min-width: 50%;
+  display: flex;
+  justify-content: space-evenly;
+}

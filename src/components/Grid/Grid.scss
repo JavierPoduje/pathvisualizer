@@ -1,0 +1,13 @@
+@import '../../styles/common';
+@use "scss:map";
+
+.grid {
+  margin-top: 1rem;
+  padding: 2rem 2rem;
+  background-color: map-get($colors, crust);
+
+  display: grid;
+  grid-template-columns: repeat(38, 1fr);
+  grid-template-rows: repeat(20, 1fr);
+  grid-gap: 5px;
+}

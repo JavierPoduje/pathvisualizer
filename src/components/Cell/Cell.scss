@@ -1,0 +1,36 @@
+@import "../../styles/common";
+@use "scss:map";
+
+.cell {
+  border-radius: 5px;
+  font-size: 10px;
+  border: 1px solid map-get($colors, mantle);
+  cursor: pointer;
+  width: 1.7rem;
+  height: 1.7rem;
+
+  &:hover {
+    border: 1px solid map-get($colors, peach);
+  }
+  &:active {
+    border: 1px solid map-get($colors, peach);
+    background-color: map-get($colors, sky);
+  }
+
+  // color by type
+  &_normal {
+    background-color: map-get($colors, _crust);
+  }
+  &_normal_visited {
+    background-color: map-get($colors, mauve);
+  }
+  &_wall {
+    background-color: map-get($colors, surface1);
+  }
+  &_source {
+    background-color: map-get($colors, _blue);
+  }
+  &_target {
+    background-color: map-get($colors, _red);
+  }
+}
