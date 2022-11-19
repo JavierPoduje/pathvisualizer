@@ -19,18 +19,18 @@
 
   // color by type
   &_normal {
-    background-color: map-get($colors, _crust);
+    background-color: map-get($colors, normal);
   }
-  &_normal_visited {
-    background-color: map-get($colors, mauve);
+  &_visited {
+    background-color: map-get($colors, visited);
   }
   &_wall {
-    background-color: map-get($colors, surface1);
+    background-color: map-get($colors, wall);
   }
   &_source {
-    background-color: map-get($colors, _blue);
+    background-color: map-get($colors, source);
   }
   &_target {
-    background-color: map-get($colors, _red);
+    background-color: map-get($colors, target);
   }
 }

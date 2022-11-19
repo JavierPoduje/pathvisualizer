@@ -1,3 +1,4 @@
+import { Provider } from "./context/Context";
 import Navbar from './components/Navbar/Navbar';
 import Grid from './components/Grid/Grid';
 import './App.scss';
@@ -5,8 +6,10 @@ import './App.scss';
 function App() {
   return (
     <div className="App">
-      <Navbar />
-      <Grid />
+      <Provider>
+        <Navbar />
+        <Grid />
+      </Provider>
     </div>
   );
 }
