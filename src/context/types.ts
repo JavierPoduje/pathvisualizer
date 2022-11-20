@@ -12,6 +12,7 @@ export enum ClickMode {
   Source,
   Target,
   Wall,
+  Normal,
 }
 
 export type ActionMap<M extends { [index: string]: any }> = {

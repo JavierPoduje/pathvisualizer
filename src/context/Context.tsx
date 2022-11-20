@@ -4,6 +4,8 @@ import { ClickMode } from "./types";
 
 export type State = {
   clickMode: ClickMode;
+  setAsWallOnMouseEnter: boolean;
+  setAsNormalOnMouseEnter: boolean;
   seens: Set<string>; // cell id
   source?: string; // cell id
   target?: string; // cell id
@@ -12,9 +14,11 @@ export type State = {
 
 export const initialState: State = {
   clickMode: ClickMode.Source,
+  setAsWallOnMouseEnter: false,
+  setAsNormalOnMouseEnter: false,
   seens: new Set(),
   source: `0-0`,
-  target: `19-43`,
+  target: `19-43`, // TODO: this should be dynamic
   walls: new Set(),
 };
 
