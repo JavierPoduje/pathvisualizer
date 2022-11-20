@@ -1,22 +1,50 @@
+import { useContext } from "react";
 import "./Navbar.scss";
 import Button from "../Button/Button";
+import { Context } from "../../context/Context";
+import { ClickMode } from "../../context/types";
+import { ActionsEnum } from "../../context/reducer";
 
 const Navbar = () => {
+  const { state, dispatch } = useContext(Context);
+
+  console.log("Navbar#state?.clickMode: ", state?.clickMode);
+
   return (
     <nav className="main">
-      <h2 className="appName">Path Visualizer</h2>
+      <h2 className="appName">
+        <em>Path Visualizer</em>
+      </h2>
       <div className={"buttons"}>
         <Button
           text={"source"}
-          onClick={() => console.log("`destination` button clicked")}
+          onClick={() =>
+            dispatch({
+              type: ActionsEnum.SetClickMode,
+              payload: ClickMode.Source,
+            })
+          }
+          selected={state?.clickMode === ClickMode.Source}
         />
         <Button
-          text={"destination"}
-          onClick={() => console.log("`destination` button clicked")}
+          text={"target"}
+          onClick={() =>
+            dispatch({
+              type: ActionsEnum.SetClickMode,
+              payload: ClickMode.Target,
+            })
+          }
+          selected={state?.clickMode === ClickMode.Target}
         />
         <Button
           text={"wall"}
-          onClick={() => console.log("`wall` button clicked")}
+          onClick={() =>
+            dispatch({
+              type: ActionsEnum.SetClickMode,
+              payload: ClickMode.Wall,
+            })
+          }
+          selected={state?.clickMode === ClickMode.Wall}
         />
         <Button
           text={"Run"}

@@ -1,7 +1,9 @@
 import React, { createContext, useReducer, Dispatch } from "react";
 import { ContextActions, contextReducer } from "./reducer";
+import { ClickMode } from "./types";
 
 export type State = {
+  clickMode: ClickMode;
   seens: Set<string>; // cell id
   source?: string; // cell id
   target?: string; // cell id
@@ -9,6 +11,7 @@ export type State = {
 };
 
 export const initialState: State = {
+  clickMode: ClickMode.Source,
   seens: new Set(),
   source: `0-0`,
   target: `19-43`,

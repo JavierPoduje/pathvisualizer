@@ -1,4 +1,4 @@
-@import '../../styles/common';
+@import "../../styles/common";
 @use "scss:map";
 
 .button {
@@ -13,6 +13,7 @@
   color: map-get($colors, text);
 
   background-color: map-get($colors, surface0);
+  transition: all 0.2s ease-out;
 
   &:hover {
     background-color: map-get($colors, surface1);
@@ -20,6 +21,9 @@
   &:active {
     background-color: map-get($colors, surface2);
   }
+
+  &_selected {
+    text-shadow: 0 0 3px #B7BDF8;
+    box-shadow: 0 0 5px #B7BDF8;
+  }
 }
-
-

@@ -16,6 +16,7 @@
 .appName {
   font-size: inherit;
   margin: 0;
+  text-shadow: 0 0 3px map-get($colors, lavender);
 }
 
 .buttons {

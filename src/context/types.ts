@@ -8,6 +8,12 @@ export interface Cell {
   coord: Coord;
 }
 
+export enum ClickMode {
+  Source,
+  Target,
+  Wall,
+}
+
 export type ActionMap<M extends { [index: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined
     ? {
