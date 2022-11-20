@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useTransition, useContext, useState } from "react";
 import { Context } from "../../context/Context";
 import { ActionsEnum } from "../../context/reducer";
 import { ClickMode } from "../../context/types";
@@ -14,73 +14,99 @@ export enum CellType {
 
 interface Props {
   coord: { row: number; col: number };
-  type?: CellType;
 }
 
-const Cell: React.FC<Props> = ({ coord, type = CellType.Normal }) => {
+const Cell: React.FC<Props> = ({ coord }) => {
   const { state, dispatch } = useContext(Context);
+  const [type, setType] = useState(CellType.Normal);
+  const [, startTransition] = useTransition();
 
   const onMouseDown = () => {
     switch (state?.clickMode) {
       case ClickMode.Wall:
-        dispatch({ type: ActionsEnum.SetAsWallOnMouseEnter, payload: true });
-        dispatch({ type: ActionsEnum.SetAsNormalOnMouseEnter, payload: false });
-        dispatch({
-          type: ActionsEnum.AddWall,
-          payload: `${coord.row}-${coord.col}`,
+        setType(CellType.Wall);
+        startTransition(() => {
+          dispatch({ type: ActionsEnum.SetAsWallOnMouseEnter, payload: true });
+          dispatch({
+            type: ActionsEnum.SetAsNormalOnMouseEnter,
+            payload: false,
+          });
+          dispatch({
+            type: ActionsEnum.AddWall,
+            payload: `${coord.row}-${coord.col}`,
+          });
         });
         break;
       case ClickMode.Normal:
-        dispatch({ type: ActionsEnum.SetAsNormalOnMouseEnter, payload: true });
-        dispatch({ type: ActionsEnum.SetAsWallOnMouseEnter, payload: false });
-        dispatch({
-          type: ActionsEnum.RemoveWall,
-          payload: `${coord.row}-${coord.col}`,
+        setType(CellType.Normal);
+        startTransition(() => {
+          dispatch({
+            type: ActionsEnum.SetAsNormalOnMouseEnter,
+            payload: true,
+          });
+          dispatch({ type: ActionsEnum.SetAsWallOnMouseEnter, payload: false });
+          dispatch({
+            type: ActionsEnum.RemoveWall,
+            payload: `${coord.row}-${coord.col}`,
+          });
         });
         break;
       case ClickMode.Source:
-        dispatch({
-          type: ActionsEnum.SetSource,
-          payload: `${coord.row}-${coord.col}`,
+        setType(CellType.Source);
+        startTransition(() => {
+          dispatch({
+            type: ActionsEnum.SetSource,
+            payload: `${coord.row}-${coord.col}`,
+          });
         });
         break;
       case ClickMode.Target:
-        dispatch({
-          type: ActionsEnum.SetTarget,
-          payload: `${coord.row}-${coord.col}`,
+        setType(CellType.Target);
+        startTransition(() => {
+          dispatch({
+            type: ActionsEnum.SetTarget,
+            payload: `${coord.row}-${coord.col}`,
+          });
         });
         break;
-    }
-  };
-
-  const onMouseUp = () => {
-    if (state?.clickMode === ClickMode.Wall) {
-      dispatch({ type: ActionsEnum.SetAsWallOnMouseEnter, payload: false });
-    } else if (state?.clickMode === ClickMode.Normal) {
-      dispatch({ type: ActionsEnum.SetAsNormalOnMouseEnter, payload: false });
     }
   };
 
   const onMouseEnter = () => {
     if (state?.setAsWallOnMouseEnter) {
-      dispatch({
-        type: ActionsEnum.AddWall,
-        payload: `${coord.row}-${coord.col}`,
+      setType(CellType.Wall);
+      startTransition(() => {
+        dispatch({
+          type: ActionsEnum.AddWall,
+          payload: `${coord.row}-${coord.col}`,
+        });
       });
     } else if (state?.setAsNormalOnMouseEnter) {
-      dispatch({
-        type: ActionsEnum.RemoveWall,
-        payload: `${coord.row}-${coord.col}`,
+      setType(CellType.Normal);
+      startTransition(() => {
+        dispatch({
+          type: ActionsEnum.RemoveWall,
+          payload: `${coord.row}-${coord.col}`,
+        });
       });
+    }
+  };
+
+  const cellType = () => {
+    if (state?.source === `${coord.row}-${coord.col}`) {
+      return "source";
+    } else if (state?.target === `${coord.row}-${coord.col}`) {
+      return "target";
+    } else {
+      return type;
     }
   };
 
   return (
     <button
-      className={`cell cell_${type}`}
+      className={`cell cell_${cellType()}`}
       onClick={onMouseDown}
       onMouseDown={onMouseDown}
-      onMouseUp={onMouseUp}
       onMouseEnter={onMouseEnter}
     />
   );

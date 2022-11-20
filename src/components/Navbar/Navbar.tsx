@@ -8,12 +8,10 @@ import { ActionsEnum } from "../../context/reducer";
 const Navbar = () => {
   const { state, dispatch } = useContext(Context);
 
-  console.log("Navbar#state?.clickMode: ", state?.clickMode);
-
   return (
     <nav className="main">
       <h2 className="appName">
-        <em>Path Visualizer</em>
+        <em>Dijkstra's</em>
       </h2>
       <div className={"buttons"}>
         <Button

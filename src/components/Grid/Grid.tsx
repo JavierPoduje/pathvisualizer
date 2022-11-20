@@ -1,26 +1,22 @@
 import { useContext } from "react";
 import { Context } from "../../context/Context";
-import Cell, { CellType } from "../Cell/Cell";
+import { ActionsEnum } from "../../context/reducer";
+import Cell from "../Cell/Cell";
 import "./Grid.scss";
 
 const ROWS = 20;
 const COLS = 44;
 
 const Grid = () => {
-  const { state } = useContext(Context);
+  const { dispatch } = useContext(Context);
 
-  const cellType = (row: number, col: number): CellType => {
-    const id = `${row}-${col}`;
-
-    if (id === state?.source) return CellType.Source;
-    else if (id === state?.target) return CellType.Target;
-    else if (state?.walls.has(id)) return CellType.Wall;
-    else if (state?.seens.has(id)) return CellType.Visited;
-    else return CellType.Normal;
+  const onMouseUp = () => {
+    dispatch({ type: ActionsEnum.SetAsWallOnMouseEnter, payload: false });
+    dispatch({ type: ActionsEnum.SetAsNormalOnMouseEnter, payload: false });
   };
 
   return (
-    <section className="grid-container">
+    <section className="grid-container" onMouseUp={onMouseUp}>
       <div className="grid">
         {new Array(ROWS).fill(0).map((_, row) =>
           new Array(COLS).fill(0).map((_, col) => {
@@ -28,7 +24,6 @@ const Grid = () => {
               <Cell
                 key={`${row}-${col}`}
                 coord={{ row, col }}
-                type={cellType(row, col)}
               />
             );
           })
